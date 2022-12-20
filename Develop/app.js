@@ -81,7 +81,7 @@ if(profile != 'None') {
     return ``;
 }
 return '';
-}
+}navigator
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
