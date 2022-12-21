@@ -1,6 +1,3 @@
-const Manager = require("./lib/Manager");
-const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
@@ -18,59 +15,39 @@ inquirer
     .prompt( [
         {
             type: "input",
-            name: "employeeName",
-            message: "What is the employee's name?",
+            name: "employeeType",
+            message: "What type of employee are you?",
         },
         {
             type: "input",
             name: "employeeId",
-            message: "What is their Id number?",
+            message: "What is your employee Id number?",
         },
         {
             type: "input",
             name: "employeeGitHub",
-            message: "What is the employee's GitHub?",
+            message: "What is your employee's GitHub?",
         },
         {
             type: "input",
-            name: "engineerName",
-            message: "What is the engineer's name?",
+            name: "employeeEmailAddress",
+            message: "What is your employee email address?",
         },
         {
             type: "input",
-            name: "engineerGitHub",
-            message: "What is the engineer's GitHub?",
+            name: "employeeRole",
+            message: "What is your role as an employee?",
         },
         {
             type: "input",
-            name: "internName",
-            message: "What is the intern's name?",
+            name: "employeeOfficeNumber",
+            message: "What is your employee office number?",
         },
         {
             type: "input",
-            name: "internSchool",
-            message: "Where did the intern go to school?",
-        },
-        {
-            type: "input",
-            name: "internGitHub",
-            message: "What is intern's GitHub?"
-        },
-        {
-            type: "input",
-            name: "managerName",
-            message: "What is the manager's name?",
-        },
-        {
-            type: "input",
-            name: "managerGitHub",
-            message: "What is the manager's GitHub?",
-        },
-        {
-            type: "input",
-            name: "managerId",
-            message: "What is the manager's Id?"
-        },
+            name: "employeeSchool",
+            message: "Where did you go to school?",
+        },   
     ])
     .then((data) => { fs.writeFileSync('index.html'(data)) });
 // After the user has input all employees desired, call the `render` function (required
