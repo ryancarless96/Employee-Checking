@@ -1,7 +1,9 @@
 const path = require("path");
 const fs = require("fs");
+const inquirer = require("inquirer");
+// const generateHTML = require('')
 
-const templatesDir = path.resolve(__dirname, "../templates");
+ const templatesDir = path.resolve(__dirname, "../templates");
 
 const render = employees => {
   const html = [];

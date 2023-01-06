@@ -1,78 +1,156 @@
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 
-
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
-
+const teamArray = []
 const render = require("./lib/htmlRenderer");
 
 
+addManager()
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-inquirer
-    .prompt( [
-        {
-            type: "input",
-            name: "employeeType",
-            message: "What type of employee are you?",
-        },
-        {
-            type: "input",
-            name: "employeeId",
-            message: "What is your employee Id number?",
-        },
-        {
-            type: "input",
-            name: "employeeGitHub",
-            message: "What is your employee's GitHub?",
-        },
-        {
-            type: "input",
-            name: "employeeEmailAddress",
-            message: "What is your employee email address?",
-        },
-        {
-            type: "input",
-            name: "employeeRole",
-            message: "What is your role as an employee?",
-        },
-        {
-            type: "input",
-            name: "employeeOfficeNumber",
-            message: "What is your employee office number?",
-        },
-        {
-            type: "input",
-            name: "employeeSchool",
-            message: "Where did you go to school?",
-        },   
-    ])
-    .then((data) => { fs.writeFileSync('index.html'(data)) });
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
+function addManager(){
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "name",
+                message: "Place your name here:",
+            },
+           {
+                type: "input",
+                name: "id",
+                message: "Place your ID number here:",
+            },
+            // {
+            //     type: "input",
+            //     name: "GitHub",
+            //     message: "Place your GitHub username here:",
+            // },
+            {
+                type: "input",
+                name: "email",
+                message: "Place your email address here:",
+            },
+            {
+                type: "input",
+                name: "officeNumber",
+                message: "Place your office number here:",
+            },
+           
+        ]) .then(data=>{
+            const instance = new Manager(data.name,data.id,data.email,data.officeNumber)
+            teamArray.push(instance)
+            console.log(teamArray)
+            addNewMember()
+        })
+    }
 
 
+function addEngineer(){
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "name",
+                message: "Place your name here:",
+            },
+           {
+                type: "input",
+                name: "id",
+                message: "Place your ID number here:",
+            },
+            {
+                type: "input",
+                name: "GitHub",
+                message: "Place your GitHub username here:",
+            },
+            {
+                type: "input",
+                name: "email",
+                message: "Place your email address here:",
+            },
+            
+           
+        ]) .then(data=>{
+            const instance = new Engineer(data.name,data.id,data.email,data.GitHub)
+            teamArray.push(instance)
+            console.log(teamArray)
+            addNewMember()
+        })
+    }
+
+    function addIntern(){
+        inquirer
+            .prompt([
+                {
+                    type: "input",
+                    name: "name",
+                    message: "Place your name here:",
+                },
+               {
+                    type: "input",
+                    name: "id",
+                    message: "Place your ID number here:",
+                },
+                // {
+                //     type: "input",
+                //     name: "GitHub",
+                //     message: "Place your GitHub username here:",
+                // },
+                {
+                    type: "input",
+                    name: "email",
+                    message: "Place your email address here:",
+                },
+                {
+                    type: "input",
+                    name: "school",
+                    message: "Place your school here:"
+                },
+                
+               
+            ]) .then(data=>{
+                const instance = new Intern(data.name,data.id,data.email,data.GitHub)
+                teamArray.push(instance)
+                console.log(teamArray)
+                addNewMember()
+            })
+        }
+    
+    
+            function addNewMember(){
+                inquirer.prompt([
+                     {
+                type: "list",
+                name: "role",
+                message: "Place your role as an employee here:",
+                choices: ["Engineer", "Intern", "Manager","None"],
+            }, 
+                ]).then(data=>{
+                    if(data.role==="Engineer"){
+                        addEngineer()
+                    }
+                    else if(data.role==="Intern"){
+                        addIntern()
+                    }
+                    else if(data.role==="Manager"){
+                        addManager()
+                    }
+                    else{
+                        console.log("Team created")
+                        fs.writeFileSync("index.html", render(teamArray))
+                    }
+                })
+            }
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
 // `output` folder. You can use the variable `outputPath` above target this location.
 // Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-function init() {
-    inquirer.prompt(questions)
-        .then((data) => { fs.writeFileSync('index.html'(data)) })
-        .then(() => console.log('Successfully wrote to index.html'))
-}
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
+// does not.                                   
 
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
-//init();
