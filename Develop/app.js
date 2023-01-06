@@ -116,7 +116,7 @@ function addEngineer(){
                 
                
             ]) .then(data=>{
-                const instance = new Intern(data.name,data.id,data.email,data.GitHub)
+                const instance = new Intern(data.name,data.id,data.email,data.school)
                 teamArray.push(instance)
                 console.log(teamArray)
                 addNewMember()
